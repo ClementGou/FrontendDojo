@@ -1,3 +1,13 @@
-<p>
-  header works!
-</p>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-default">
+      <li routerLinkActive="active">
+        <a routerLink="auth/connection">Connexion</a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="auth/registration">S'enregistrer</a>
+      </li>
+    </ul>
+  </div>
+  <div>Jour: {{giveToday() | date: 'd/MM/y'}}</div>
+</nav>

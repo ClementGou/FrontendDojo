@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { HumeurEquipeComponent } from './team-humor/humeur-equipe.component';
-import { MonHumeurJourComponent } from './user-humor/mon-humeur-jour.component';
+import { TeamHumorComponent } from './team-humor/team-humor.component';
+import { UserHumorComponent } from './user-humor/user-humor.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { ConnectionComponent } from './auth/connection/connection.component';
 import { HeaderComponent } from './header/header.component';
@@ -27,8 +27,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HumeurEquipeComponent,
-    MonHumeurJourComponent,
+    TeamHumorComponent,
+    UserHumorComponent,
     RegistrationComponent,
     ConnectionComponent,
     HeaderComponent,

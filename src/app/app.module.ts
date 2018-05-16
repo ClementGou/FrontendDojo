@@ -17,11 +17,11 @@ import {RouterModule, Routes} from '@angular/router';
 
 
 const appRoutes: Routes = [
-  { path: 'auth/connection', component: ConnectionComponent},
-  { path: 'auth/registration', component: RegistrationComponent},
+  { path: 'connection', component: ConnectionComponent},
+  { path: 'registration', component: RegistrationComponent},
   { path: 'humors', component: HumorsComponent},
   { path: '', component: HumorsComponent}
-]
+];
 
 
 @NgModule({
@@ -38,7 +38,7 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [
     AuthGardService,

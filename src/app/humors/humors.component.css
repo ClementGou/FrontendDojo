@@ -1,0 +1,31 @@
+/*CSS COMMUN TEAM-HUMOR & USER-HUMOR*/
+
+.fa-meh-o {
+  color:  gold;
+}
+
+.fa-smile-o {
+  color: green;
+}
+
+.fa-frown-o {
+  color: red;
+}
+
+.boxed {
+  height: 4em;
+    display: flex;
+  flex-direction: column;
+justify-content: center;
+  align-items: center;
+}
+
+/*CSS USER-HUMOR*/
+
+#user-humor-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+

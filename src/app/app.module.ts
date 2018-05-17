@@ -4,8 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { TeamHumorComponent } from './team-humor/team-humor.component';
 import { UserHumorComponent } from './user-humor/user-humor.component';
-import { RegistrationComponent } from './auth/registration/registration.component';
-import { ConnectionComponent } from './auth/connection/connection.component';
+import { ConnectionComponent } from './connection/connection.component';
 import { HeaderComponent } from './header/header.component';
 import { HumorsComponent } from './humors/humors.component';
 import {AuthGardService} from './services/auth-gard.service';
@@ -14,11 +13,11 @@ import {TeamHumorService} from './services/team-humor.service';
 import {UserHumorService} from './services/user-humor.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
 const appRoutes: Routes = [
   { path: 'connection', component: ConnectionComponent},
-  { path: 'registration', component: RegistrationComponent},
   { path: 'humors', component: HumorsComponent},
   { path: '', component: HumorsComponent}
 ];
@@ -29,7 +28,6 @@ const appRoutes: Routes = [
     AppComponent,
     TeamHumorComponent,
     UserHumorComponent,
-    RegistrationComponent,
     ConnectionComponent,
     HeaderComponent,
     HumorsComponent
@@ -39,6 +37,7 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
+    AngularFontAwesomeModule
   ],
   providers: [
     AuthGardService,

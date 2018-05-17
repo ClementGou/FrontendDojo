@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from '../services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -7,15 +8,30 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  giveToday() {
-    const date = new Date();
-    return date;
-  }
+  authStatus: boolean;
 
-  constructor() {
+  constructor(private authenticationService: AuthenticationService) {
+
   }
 
   ngOnInit() {
   }
 
+  giveToday() {
+    const date = new Date();
+    return date;
+  }
+
+  onDisconnect() {
+    this.authenticationService.Disconnect();
+  }
+
+  onConnect() {
+    this.authenticationService.Connect().then(
+      () => {
+        this.authStatus = this.authenticationService.isConnected;
+      }
+    );
+  }
 }
+

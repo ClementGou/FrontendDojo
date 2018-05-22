@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-humors',
@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HumorsComponent implements OnInit {
 
-  constructor() { }
+  isAuth = true;
+
+  constructor() {
+  }
 
   ngOnInit() {
+
   }
 
 }

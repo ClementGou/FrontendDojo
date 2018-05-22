@@ -1,7 +1,7 @@
-/*CSS COMMUN TEAM-HUMOR & USER-HUMOR*/
+/*CCS COMMUN*/
 
 .fa-meh-o {
-  color:  gold;
+  color: gold;
 }
 
 .fa-smile-o {
@@ -12,12 +12,56 @@
   color: red;
 }
 
-.boxed {
-  height: 4em;
-    display: flex;
+
+/*CSS PAGE ACCEUIL */
+.fa-stack {
+  text-align:center;
+  display:flex;
+}
+
+#frontPage {
+  display: flex;
   flex-direction: column;
-justify-content: center;
+  justify-content: center;
   align-items: center;
+}
+
+#frontPage .text-black {
+  text-align: center ;
+  text-align-last: center;
+}
+
+
+/*CSS COMMUN TEAM-HUMOR & USER-HUMOR*/
+
+
+#humor-title.boxed {
+  height: 4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#humor-box.boxed {
+  flex-direction: column;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  border: solid black 0.5px;
+  border-top: none;
+  padding: 5px;
+}
+
+/*CSS TEAM-HUMOR*/
+
+#member-counter {
+align-content: center;
+}
+
+h2 .text-dark {
+  text-align: center;
 }
 
 /*CSS USER-HUMOR*/

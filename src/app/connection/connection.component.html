@@ -1,5 +1,22 @@
 <div class="col-xs-12">
   <h2>Page de connection</h2>
+  <form action="/users/login">
+    <div class="form-group">
+      <label for="userLastName">Nom</label>
+      <input type="text" class="form-control" id="userLastName" placeholder="nom">
+    </div>
+    <div class="form-group">
+      <label for="userFirstName">Prénom</label>
+      <input type="text" class="form-control" id="userFirstName" placeholder="prénom">
+    </div>
+    <div class="form-group">
+      <label for="userPassword">Mot de passe</label>
+      <input type="password" class="form-control" id="userPassword" placeholder="mot de passe">
+    </div>
+  </form>
+
+
+  <button type="submit" class="btn btn-primary mb-2" formaction="">Connection</button>
   <a routerLink="/humors">
     <button class="btn-success pull-left"> Retour Humeurs</button>
   </a>

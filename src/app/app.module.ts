@@ -15,7 +15,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
-
 const appRoutes: Routes = [
   { path: 'connection', component: ConnectionComponent},
   { path: 'humors', component: HumorsComponent},
@@ -37,7 +36,8 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+
   ],
   providers: [
     AuthGardService,

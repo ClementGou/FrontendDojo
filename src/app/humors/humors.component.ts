@@ -7,13 +7,13 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HumorsComponent implements OnInit {
 
-  isAuth = false;
+  isAuth: boolean;
 
   constructor() {
   }
 
   ngOnInit() {
-
+    this.isAuth = false;
   }
 
 }

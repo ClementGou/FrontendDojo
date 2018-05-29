@@ -28,11 +28,16 @@
     "bootstrap": "^4.0.0",
     "bootstrap-modal": "^2.2.1",
     "core-js": "^2.5.4",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "liquid-fire": "^0.26.0",
+    "markdown": "^0.5.0",
     "popper.js": "^1.12.9",
-    "rxjs": "^6.0.0",
+    "request": "^2.87.0",
+    "restler": "^3.4.0",
+    "rxjs": "^6.2.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

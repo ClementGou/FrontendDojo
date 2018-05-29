@@ -8,13 +8,14 @@ import {AuthenticationService} from '../services/authentication.service';
 })
 export class HeaderComponent implements OnInit {
 
-  authStatus: boolean;
+  isAuth: boolean;
 
   constructor(private authenticationService: AuthenticationService) {
 
   }
 
   ngOnInit() {
+    this.isAuth = false;
   }
 
   giveToday() {
@@ -26,12 +27,5 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.Disconnect();
   }
 
-  onConnect() {
-    this.authenticationService.Connect().then(
-      () => {
-        this.authStatus = this.authenticationService.isConnected;
-      }
-    );
-  }
 }
 

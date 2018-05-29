@@ -1,23 +1,25 @@
 <div class="col-xs-12">
-  <h2>Page de connection</h2>
-  <form action="/users/login">
+  <h2>Page de connexion</h2>
+  <form (ngSubmit)="login(form)" action="/users/login" #form="ngForm">
     <div class="form-group">
-      <label for="userLastName">Nom</label>
-      <input type="text" class="form-control" id="userLastName" placeholder="nom">
+      <label for="firstname">Prénom</label>
+      <input type="text" class="form-control" id="firstname" name="firstname" placeholder="prénom" ngModel required>
     </div>
     <div class="form-group">
-      <label for="userFirstName">Prénom</label>
-      <input type="text" class="form-control" id="userFirstName" placeholder="prénom">
+      <label for="lastname">Nom</label>
+      <input type="text" class="form-control" id="lastname" name="lastname" placeholder="nom" ngModel required>
     </div>
     <div class="form-group">
-      <label for="userPassword">Mot de passe</label>
-      <input type="password" class="form-control" id="userPassword" placeholder="mot de passe">
+      <label for="password">Mot de passe</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="mot de passe" ngModel
+             required>
     </div>
+    <button type="submit" class="btn btn-primary mb-2" [disabled]="form.invalid">Connection</button>
   </form>
+  <p>
+    <a routerLink="/humors">
+      <button class="btn btn-primary mb-2"> Retour Humeurs</button>
+    </a>
+  </p>
 
-
-  <button type="submit" class="btn btn-primary mb-2" formaction="">Connection</button>
-  <a routerLink="/humors">
-    <button class="btn-success pull-left"> Retour Humeurs</button>
-  </a>
 </div>

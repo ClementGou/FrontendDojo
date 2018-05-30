@@ -9,7 +9,6 @@ import {Router} from '@angular/router';
   templateUrl: './connection.component.html',
   styleUrls: ['./connection.component.css']
 })
-
 export class ConnectionComponent implements OnInit {
 
 test: string;
@@ -25,11 +24,20 @@ test: string;
     const lastname = form.value['lastname'];
     const password = form.value['password'];
 
-if (
-  this.authenticationService.checkUserExistence(firstname, lastname, password) === 200){
-
-    }
-    this.router.navigateByUrl('../humors');
+    // checkUserExistence renvoie un observable
+    // il faut donc y souscrire afin d'être au courant des changements
+    // lors d'un changement, on check le résultat de l'authenfication
+    // et on route en fonction
+    this.authenticationService.checkUserExistence(
+      firstname, lastname, password).subscribe(authState => {
+        console.log('authState', authState);
+        if (authState && authState.isAuth) {
+          this.router.navigate(['/humors']);
+        } else {
+          this.router.navigate(['/connection']);
+        }
+    });
+        
   }
 
 

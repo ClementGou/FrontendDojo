@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouterModule, Routes} from '@angular/router';
+import {RouterModule, Routes, CanActivate } from '@angular/router';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
@@ -18,14 +18,11 @@ import {UserHumorService} from './services/user-humor.service';
 import {API_URL, ApplicationInterceptor} from './application.interceptor';
 import {environment} from '../environments/environment';
 
-
-
 const appRoutes: Routes = [
   {path: 'connection', component: ConnectionComponent},
-  {path: 'humors', component: HumorsComponent},
-  {path: '', component: HumorsComponent}
+  {path: 'humors', component: HumorsComponent, canActivate: [AuthGardService] },
+  {path: '', component: HumorsComponent, canActivate: [AuthGardService]}
 ];
-
 
 @NgModule({
   declarations: [

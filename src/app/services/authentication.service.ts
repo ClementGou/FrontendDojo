@@ -1,44 +1,42 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {HumorsComponent} from '../humors/humors.component';
-
-
+import { BehaviorSubject } from 'rxjs';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
+import { Auth } from './auth.model';
 @Injectable({
   providedIn: 'root'
 })
+export class AuthenticationService {
 
-export class AuthenticationService implements OnInit {
-  isAuth: boolean;
+  // On utilise un behaviorSubject pour permettre à tous les souscriveurs
+  // d'obtenir la valeur courante
+  observable = new BehaviorSubject<Auth>({isAuth: false, resp: -1});
 
-  resp: number;
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {
-  }
-
-  ngOnInit() {
-    this.isAuth = false;
+  //  On retourne le subject afin de laisser les autres composants 
+  // s'informer de l'état de l'authentification
+  getAuthState() {
+    return this.observable;
   }
 
   // Find if a user defined in forms exists in DB
   checkUserExistence(firstname, lastname, password) {
-
-    this.http.get('member/login/firstname/' + firstname + '/lastname/' + lastname + '/password/' + password,
-      {observe: 'response'}).subscribe(response => {
-        if (response.status === 200) {
-          console.log(response.status + ' utilisateur existant');
-          this.isAuth = true;
-          this.resp = 200;
-        } else {
-          console.log(response.status);
-          console.log('Utilisateur inconnu');
-
-        }
-      },
-      (error) => {
-        console.log('Erreur de connexion!: ' + error);
+    // On mock / simule l'appel à un ws et on renvoie un succes apres 1 seconde
+    // en utilisant le subject
+    of({isAuth: true, resp: 200}).pipe( // TODO remettre la vrai requete http
+      delay(1000)
+    ).subscribe(
+      (authData) => {
+        this.observable.next(authData);
       }
+      // TODO il faudra gérer les erreurs
     );
-    return this.resp;
+
+    // On retourne le subject afin de laisser les autres composants 
+    return this.observable;
   }
 
   Disconnect() {

@@ -1,5 +1,4 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {Injectable} from '@angular/core';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
@@ -44,7 +43,6 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     AngularFontAwesomeModule,
     HttpClientModule,
-    Injectable,
 
 
   ],

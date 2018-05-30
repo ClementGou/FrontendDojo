@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../services/authentication.service';
 import {User} from '../models/user.model';
 import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-connection',
@@ -11,7 +12,8 @@ import {NgForm} from '@angular/forms';
 
 export class ConnectionComponent implements OnInit {
 
-  constructor(private authenticationService: AuthenticationService) {
+test: string;
+  constructor(private authenticationService: AuthenticationService, public router: Router) {
   }
 
   ngOnInit(): void {
@@ -23,7 +25,11 @@ export class ConnectionComponent implements OnInit {
     const lastname = form.value['lastname'];
     const password = form.value['password'];
 
-    this.authenticationService.checkUserExistence(firstname, lastname, password);
+if (
+  this.authenticationService.checkUserExistence(firstname, lastname, password) === 200){
+
+    }
+    this.router.navigateByUrl('../humors');
   }
 
 

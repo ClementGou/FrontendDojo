@@ -1,10 +1,10 @@
 <app-header></app-header>
-<div *ngIf="!isAuth">
+<div *ngIf="authStatus">
   <app-team-humor></app-team-humor>
   <app-user-humor></app-user-humor>
 </div>
 
-<div id="frontPage" *ngIf="isAuth">
+<div id="frontPage" *ngIf="!authStatus">
   <h2 class="text-black">-=TeamHumorApp=-</h2>
   <h2 class="text-black">Veuillez vous connecter pour utiliser l'application</h2>
   <span class="fa-3x fa-stack">

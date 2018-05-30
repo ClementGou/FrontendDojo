@@ -1,21 +1,23 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {HumorsCompoedenent} from '../humors/humors.component';
-
-import {Observable} from 'rxjs';
-import { of } from 'rxjs/internal/observable/of';
+import {HumorsComponent} from '../humors/humors.component';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
 
+export class AuthenticationService implements OnInit {
+  isAuth: boolean;
 
-  constructor(private http: HttpClient, private humors: HumorsComponent) {
+  resp: number;
+
+  constructor(private http: HttpClient) {
   }
-isAuth: boolean;
-const observ = Observable.of(42);
+
+  ngOnInit() {
+    this.isAuth = false;
+  }
 
   // Find if a user defined in forms exists in DB
   checkUserExistence(firstname, lastname, password) {
@@ -24,19 +26,22 @@ const observ = Observable.of(42);
       {observe: 'response'}).subscribe(response => {
         if (response.status === 200) {
           console.log(response.status + ' utilisateur existant');
+          this.isAuth = true;
+          this.resp = 200;
         } else {
           console.log(response.status);
           console.log('Utilisateur inconnu');
+
         }
       },
       (error) => {
         console.log('Erreur de connexion!: ' + error);
       }
     );
+    return this.resp;
   }
 
   Disconnect() {
-    this.humors.isAuth = false;
   }
 
 

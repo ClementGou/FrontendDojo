@@ -1,0 +1,22 @@
+/*CCS ACCEUIL TEXT+LOGO*/
+#frontPage {
+  text-align:center;
+}
+
+/*CCS LOGO*/
+
+.fa-meh-o {
+  color: gold;
+}
+
+.fa-smile-o {
+  color: green;
+}
+
+.fa-frown-o {
+  color: red;
+}
+
+
+
+

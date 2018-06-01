@@ -7,9 +7,8 @@
     </ul>
     <ul class="nav navbar-right">
       <li routerLinkActive="active">
-        <a class="btn text-white" routerLink="../connection">Connexion</a>
-        <a *ngIf="!isAuth" class="btn text-white" (click)="onDisconnect()">Se déconnecter</a>
-        <!--<a (click)="connect()">Se connecter</a>-->
+        <a *ngIf="!isAuth" class="btn text-white" routerLink="../connection">Connexion</a>
+        <a *ngIf="isAuth" class="btn text-white" (click)="onDisconnect()">Se déconnecter</a>
       </li>
     </ul>
   </div>

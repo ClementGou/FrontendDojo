@@ -11,6 +11,7 @@ import {UserHumorComponent} from './user-humor/user-humor.component';
 import {ConnectionComponent} from './connection/connection.component';
 import {HeaderComponent} from './header/header.component';
 import {HumorsComponent} from './humors/humors.component';
+import {AcceuilComponent} from './acceuil/acceuil.component';
 import {AuthGardService} from './services/auth-gard.service';
 import {AuthenticationService} from './services/authentication.service';
 import {TeamHumorService} from './services/team-humor.service';
@@ -19,11 +20,11 @@ import {API_URL, ApplicationInterceptor} from './application.interceptor';
 import {environment} from '../environments/environment';
 
 
-
 const appRoutes: Routes = [
+  {path: '', component: AcceuilComponent},
+  {path: 'acceuil', component: AcceuilComponent},
   {path: 'connection', component: ConnectionComponent},
-  {path: 'humors', component: HumorsComponent},
-  {path: '', component: HumorsComponent}
+  {path: 'humors', canActivate: [AuthGardService], component: HumorsComponent},
 ];
 
 
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
     UserHumorComponent,
     ConnectionComponent,
     HeaderComponent,
-    HumorsComponent
+    HumorsComponent,
+    AcceuilComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +45,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     AngularFontAwesomeModule,
     HttpClientModule,
-
-
   ],
+
   providers: [
     AuthGardService,
     AuthenticationService,
@@ -53,7 +54,7 @@ const appRoutes: Routes = [
     UserHumorService,
     AppComponent,
     {provide: API_URL, useValue: environment.apiUrl},
-    {provide: HTTP_INTERCEPTORS, useClass: ApplicationInterceptor, multi: true, deps:[API_URL]}
+    {provide: HTTP_INTERCEPTORS, useClass: ApplicationInterceptor, multi: true, deps: [API_URL]}
   ],
   bootstrap: [
     AppComponent

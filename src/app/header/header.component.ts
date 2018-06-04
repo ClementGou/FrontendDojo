@@ -10,10 +10,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn = new BehaviorSubject<boolean>(this.getIsAuth());
-
-  private isAuth = false;
-
+  protected isAuth = false;
 
   constructor(private authenticationService: AuthenticationService, private authgardService: AuthGardService, public router: Router) {
   }
@@ -24,14 +21,9 @@ export class HeaderComponent implements OnInit {
 
         this.isAuth = boolean;
       }
-      // this.isLoggedIn.next(boolean);}
-      console.log('boolean isLoggedIn de HeaderComponent = ' + this.isLoggedIn.value);
+      console.log('isAuth = ' + this.isAuth);
     });
   }
-
-  // ngOnChanges (changes: SimpleChanges) {
-  //   if (changes['isAuth'])
-  // }
 
   giveToday() {
     const date = new Date();
@@ -41,10 +33,6 @@ export class HeaderComponent implements OnInit {
   onDisconnect() {
     this.authenticationService.Disconnect();
     this.router.navigate(['/']);
-  }
-
-  private getIsAuth(): boolean {
-    return this.isAuth;
   }
 }
 

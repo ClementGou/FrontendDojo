@@ -29,8 +29,10 @@ export class AuthenticationService {
 
   // Find if a user defined in forms exists in DB
   checkUserExistence(firstname, lastname, password) {
+    const password64 = btoa(password);
+    console.log('password64: ' + password64);
 
-    this.http.get('member/login/firstname/' + firstname + '/lastname/' + lastname + '/password/' + password,
+    this.http.get('member/login/firstname/' + firstname + '/lastname/' + lastname + '/password/' + password64,
       {observe: 'response'}).subscribe(response => {
         if (response.status === 200) {
           of({isAuth: true, resp: 200}).subscribe(
@@ -67,9 +69,9 @@ export class AuthenticationService {
 //   return this.observable;
 // }
 
- Disconnect (){
-this.observable.next({isAuth: false, resp: -1})
- }
+  Disconnect() {
+    this.observable.next({isAuth: false, resp: -1});
+  }
 
 
 }

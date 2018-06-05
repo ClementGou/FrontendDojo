@@ -11,7 +11,7 @@ export class HumorsComponent implements OnInit {
   authStatus: boolean;
 
   constructor(private authService: AuthenticationService) {
-
+    console.log('Constructor HumorsComponent');
   }
 
   ngOnInit() {

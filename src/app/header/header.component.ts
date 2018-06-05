@@ -1,5 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, SimpleChanges} from '@angular/core';
 import {AuthenticationService} from '../services/authentication.service';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {AuthGardService} from '../services/auth-gard.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,15 +10,19 @@ import {AuthenticationService} from '../services/authentication.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  protected isAuth = false;
 
-  isAuth: boolean;
-
-  constructor(private authenticationService: AuthenticationService) {
-
+  constructor(private authenticationService: AuthenticationService, private authgardService: AuthGardService, public router: Router) {
   }
 
   ngOnInit() {
-    this.isAuth = false;
+    this.authgardService.isLoginObservable().subscribe((boolean) => {
+      if (boolean !== undefined) {
+
+        this.isAuth = boolean;
+      }
+      console.log('isAuth = ' + this.isAuth);
+    });
   }
 
   giveToday() {
@@ -25,7 +32,7 @@ export class HeaderComponent implements OnInit {
 
   onDisconnect() {
     this.authenticationService.Disconnect();
+    this.router.navigate(['/']);
   }
-
 }
 

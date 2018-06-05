@@ -1,8 +1,14 @@
+<<<<<<< HEAD
+import { Injectable, OnInit } from '@angular/core';
+import { AuthenticationService } from './authentication.service';
+import {Router, CanActivate } from '@angular/router';
+=======
 import {Injectable, OnInit} from '@angular/core';
 import {AuthenticationService} from './authentication.service';
 import {Router, CanActivate} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
 
+>>>>>>> develop
 @Injectable({
   providedIn: 'root'
 })
@@ -10,22 +16,31 @@ export class AuthGardService implements CanActivate {
 
   private connected: boolean = false;
 
+<<<<<<< HEAD
+  constructor(private authenticationService: AuthenticationService, public router: Router) {
+=======
   isLoginSubject = new BehaviorSubject<boolean>(this.connected);
 
 
   constructor(private authenticationService: AuthenticationService, public router: Router) {
     console.log('Constructor AuthGardService');
 
+>>>>>>> develop
     // On souscrit au service et on update l'état interne du guard en fonction
     this.authenticationService.getAuthState().subscribe(authState => {
       if (authState && authState.isAuth) {
         this.connected = true;
+<<<<<<< HEAD
+      } else {
+        this.connected = false;
+=======
         this.isLoginSubject.next(true);
         console.log('AuthGard isLoginSubject = ' + this.isLoginSubject.value);
       } else {
         this.connected = false;
         this.isLoginSubject.next(false);
         console.log('AuthGard isLoginSubject = ' + this.isLoginSubject.value);
+>>>>>>> develop
       }
     });
   }
@@ -38,6 +53,8 @@ export class AuthGardService implements CanActivate {
       return false;
     }
   }
+<<<<<<< HEAD
+=======
 
 
   // TODO vérifier si fonction utile pour HeaderComponent. Est-il possible de souscrire directement au BehaviourSubject?
@@ -47,5 +64,6 @@ export class AuthGardService implements CanActivate {
 
 
 
+>>>>>>> develop
 
 }

@@ -19,12 +19,20 @@ import {UserHumorService} from './services/user-humor.service';
 import {API_URL, ApplicationInterceptor} from './application.interceptor';
 import {environment} from '../environments/environment';
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> develop
 const appRoutes: Routes = [
   {path: '', component: AcceuilComponent},
   {path: 'acceuil', component: AcceuilComponent},
   {path: 'connection', component: ConnectionComponent},
+<<<<<<< HEAD
+  {path: 'humors', component: HumorsComponent, canActivate: [AuthGardService] },
+  {path: '', component: HumorsComponent, canActivate: [AuthGardService]}
+=======
   {path: 'humors', canActivate: [AuthGardService], component: HumorsComponent},
+>>>>>>> develop
 ];
 
 @NgModule({
@@ -53,7 +61,7 @@ const appRoutes: Routes = [
     UserHumorService,
     AppComponent,
     {provide: API_URL, useValue: environment.apiUrl},
-    {provide: HTTP_INTERCEPTORS, useClass: ApplicationInterceptor, multi: true, deps:[API_URL]}
+    {provide: HTTP_INTERCEPTORS, useClass: ApplicationInterceptor, multi: true, deps: [API_URL]}
   ],
   bootstrap: [
     AppComponent

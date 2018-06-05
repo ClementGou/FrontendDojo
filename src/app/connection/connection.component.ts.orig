@@ -31,6 +31,16 @@ export class ConnectionComponent implements OnInit {
     // et on route en fonction
     this.authenticationService.checkUserExistence(
       firstname, lastname, password).subscribe(authState => {
+<<<<<<< HEAD
+        console.log('authState', authState);
+        if (authState && authState.isAuth) {
+          this.router.navigate(['/humors']);
+        } else {
+          this.router.navigate(['/connection']);
+        }
+    });
+        
+=======
       console.log('authState', authState);
       if (authState && authState.isAuth) {
         this.router.navigate(['/humors']);
@@ -38,6 +48,7 @@ export class ConnectionComponent implements OnInit {
         this.router.navigate(['/connection']);
       }
     });
+>>>>>>> develop
   }
 
   loginFooBar() {

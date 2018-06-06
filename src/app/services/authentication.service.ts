@@ -11,10 +11,8 @@ import {Auth} from '../models/auth.model';
 })
 export class AuthenticationService {
 
-export class AuthenticationService {
-
   // On utilise un behaviorSubject pour permettre à tous les souscriveurs
-  // d'obtenir la valeur courante
+  // d'obtenir la valeur courante (un BehaviorSubject a toujours une valeur par défaut)
   observable = new BehaviorSubject<Auth>({isAuth: false, resp: -1});
 
   constructor(private http: HttpClient) {
@@ -36,12 +34,9 @@ export class AuthenticationService {
     this.http.get('member/login/firstname/' + firstname + '/lastname/' + lastname + '/password/' + password64,
       {observe: 'response'}).subscribe(response => {
         if (response.status === 200) {
-          of({isAuth: true, resp: 200}).subscribe(
-            (authData) => {
-              this.observable.next(authData);
-            });
+          this.observable.next({isAuth: true, resp: 200});
           console.log(response.status + ' utilisateur existant');
-          console.log(this.getAuthState().value);
+          console.log('observale resp number: ' + this.getAuthState().value.resp);
         } else {
           console.log(response.status + ' Utilisateur inconnu');
         }
@@ -52,7 +47,7 @@ export class AuthenticationService {
       // TODO il faudra gérer les erreurs
     );
 
-    // On retourne le subject afin de laisser les autres composants 
+    // On retourne le subject afin de laisser les autres composants
     return this.observable;
   }
 

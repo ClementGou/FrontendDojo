@@ -18,6 +18,7 @@ import {TeamHumorService} from './services/team-humor.service';
 import {UserHumorService} from './services/user-humor.service';
 import {API_URL, ApplicationInterceptor} from './application.interceptor';
 import {environment} from '../environments/environment';
+import { SafeHTMLPipe } from './pipes/safe-html.pipe';
 
 
 const appRoutes: Routes = [
@@ -35,7 +36,8 @@ const appRoutes: Routes = [
     ConnectionComponent,
     HeaderComponent,
     HumorsComponent,
-    AcceuilComponent
+    AcceuilComponent,
+    SafeHTMLPipe
   ],
   imports: [
     BrowserModule,

@@ -10,21 +10,9 @@ import {observable} from 'rxjs';
 })
 export class TeamHumorComponent implements OnInit {
 
-  // codes HTML correspondants aux emoticones des humeurs
-  protected htmlHighEmoticon = '<i class="fa fa-smile-o fa-5x" style="color:green"" ></i>';
-  protected htmlMediumEmoticon = '<i class="fa fa-meh-o fa-5x" style="color:gold"></i>';
-  protected htmlLowEmoticon = '<i class="fa fa-frown-o fa-5x" style="color:red"></i>';
-  protected htmlInterrogation = '<i class="fa fa-question fa-5x" style="color:black"></i>';
-
-  //code html à afficher dans le DOM pour l'humeur de l'équipe
-  //Par défaut: htmlInterrogation
-  protected htmlHumorEmoticon = this.htmlInterrogation;
-
-  //les valeurs récupérées de teamHumor HTTP Request (n'a pas d'usage pour le moment)
+  //les valeurs récupérées de teamHumor HTTP Request
   protected valuesNumber = 0;
   protected teamHumorValue = 0;
-
-  // TODO est-ce qu'il ne faudrait pas lui donner une valeur par défaut (0) pour afficher un point d'intérrogation?
 
   constructor(private teamHumorService: TeamHumorService) {
     console.log('Constuctor TeamHumorComponent');
@@ -35,13 +23,10 @@ export class TeamHumorComponent implements OnInit {
       this.valuesNumber = teamHumor.valuesNumber;
       if (teamHumor.teamHumorValue === 1) {
         this.teamHumorValue = 1;
-        this.htmlHumorEmoticon = this.htmlLowEmoticon;
       } else if (teamHumor.teamHumorValue === 2) {
         this.teamHumorValue = 2;
-        this.htmlHumorEmoticon = this.htmlMediumEmoticon;
       } else if (teamHumor.teamHumorValue === 3) {
         this.teamHumorValue = 3;
-        this.htmlHumorEmoticon = this.htmlHighEmoticon;
       }
     });
   }

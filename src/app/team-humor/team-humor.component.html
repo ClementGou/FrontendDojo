@@ -5,7 +5,12 @@
     </div>
     <div id="humor-box" class="boxed">
       <span id="team-humor-icon">
-        <div id="test" [innerHTML]="htmlHumorEmoticon | safeHTML"></div>
+         <div [ngSwitch]="teamHumorValue">
+          <i *ngSwitchCase="3" class="fa fa-smile-o fa-5x" style="color:green"></i>
+          <i *ngSwitchCase="2" class="fa fa-meh-o fa-5x" style="color:gold"></i>
+          <i *ngSwitchCase="1" class="fa fa-frown-o fa-5x" style="color:red"></i>
+          <i *ngSwitchCase="0" class="fa fa-question fa-5x" style="color:black"></i>
+        </div>
       </span>
       <div id="member-counter">
         <h2 class="text-dark ">{{valuesNumber}}/5</h2>

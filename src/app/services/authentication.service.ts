@@ -35,17 +35,20 @@ export class AuthenticationService {
       {observe: 'response'}).subscribe(response => {
         if (response.status === 200) {
           this.observable.next({isAuth: true, resp: 200});
-          console.log(response.status + ' utilisateur existant');
-          console.log('observale resp number: ' + this.getAuthState().value.resp);
+          console.log(response.status + ' Utilisateur existant');
+
         } else {
           console.log(response.status + ' Utilisateur inconnu');
         }
+        console.log(response);
+        console.log(response.body);
       },
       (error) => {
-        this.observable.next({isAuth: false, resp: 500});
+        this.observable.next({isAuth: false, resp: 204});
         //, msgError : 'compte desactit'
         console.log('Erreur de connexion!: ' + error);
       }
+
       // TODO il faudra gérer les erreurs
     );
 

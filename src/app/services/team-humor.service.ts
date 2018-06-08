@@ -25,8 +25,9 @@ export class TeamHumorService {
 
   // Find if a user defined in forms exists in DB
   getMembersNumber() {
-    this.http.get<number>('member/countAllMember').subscribe(data => {
+    this.http.get<number>('member/countAllMembers').subscribe(data => {
         this.observableMembersNumber.next(data);
+        console.log('Number of members: ' + data);
       }
     );
     return this.observableMembersNumber;
@@ -42,6 +43,7 @@ export class TeamHumorService {
           teamHumorValue: data.body.teamHumorValue,
           valuesNumber: data.body.valuesNumber
         });
+        console.log(data.body);
       }
     });
     return this.observableTeamHumor;

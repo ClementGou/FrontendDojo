@@ -15,9 +15,9 @@ export class TeamHumorService {
 
   // On utilise un behaviorSubject pour permettre à tous les souscriveurs
   // d'obtenir la valeur courante (NB: un BehaviorSubject a toujours une valeur par défaut)
-  observableTeamHumor = new BehaviorSubject<TeamHumorResponseModel>({teamHumorValue: 0, valuesNumber: 0});
+  $observableTeamHumor = new BehaviorSubject<TeamHumorResponseModel>({teamHumorValue: 0, valuesNumber: 0});
 
-  observableMembersNumber = new BehaviorSubject<number>(0);
+  $observableMembersNumber = new BehaviorSubject<number>(0);
 
   constructor(private http: HttpClient) {
     console.log('Constructor TeamHumorService');
@@ -25,27 +25,30 @@ export class TeamHumorService {
 
   // Find if a user defined in forms exists in DB
   getMembersNumber() {
+    console.log('getMembersNumber()');
     this.http.get<number>('member/countAllMembers').subscribe(data => {
-        this.observableMembersNumber.next(data);
+        this.$observableMembersNumber.next(data);
         console.log('Number of members: ' + data);
       }
     );
-    return this.observableMembersNumber;
+    return this.$observableMembersNumber;
   }
 
   getTeamHumorHTTP() {
+    console.log('getTeamHumor()');
     // TODO enlever/ajouter date URL pour huhmeur du jour
     this.http.get<TeamHumorResponseModel>('teamHumor', {observe: 'response'}).subscribe(data => {
       if (data.status === 200) {
-        this.observableTeamHumor.next({
+        this.$observableTeamHumor.next({
           day: data.body.day,
           teamHumorText: data.body.teamHumorText,
           teamHumorValue: data.body.teamHumorValue,
           valuesNumber: data.body.valuesNumber
         });
+        console.log(data);
         console.log(data.body);
       }
     });
-    return this.observableTeamHumor;
+    return this.$observableTeamHumor;
   }
 }

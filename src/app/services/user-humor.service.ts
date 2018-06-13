@@ -54,6 +54,7 @@ export class UserHumorService implements OnInit {
   }
 
   Disconnect() {
+    console.log('Disconnect()')
     this.$userHumorExists.next(false);
     this.$userHumorLevel.next(null);
   }

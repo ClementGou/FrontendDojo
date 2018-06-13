@@ -1,9 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Auth} from '../models/auth.model';
 import {UserHumorService} from '../services/user-humor.service';
-import {Input} from '@angular/compiler/src/core';
-import {log} from 'util';
 
 @Component({
   selector: 'app-user-humor',
@@ -18,17 +14,17 @@ export class UserHumorComponent implements OnInit {
   protected iconNumberUserHumor: number;
   protected userHumorExists: boolean;
 
-  constructor(private userHumorService: UserHumorService,) {
+  constructor(private userHumorService: UserHumorService) {
     console.log('Constructor UserHumorComponent');
   }
 
   ngOnInit() {
+    console.log('ngOnInit()');
     this.findUserHumor();
     this.userHumorService.$userHumorExists.subscribe(value => {
       this.userHumorExists = value;
       console.log('userHumorExists ' + value);
     });
-    console.log('this.userHumorExists: ' + this.userHumorExists);
     this.userHumorService.$userHumorLevel.subscribe(value => {
       this.iconNumberUserHumor = value;
       console.log('iconNumberUserHumor ' + value);
@@ -36,15 +32,17 @@ export class UserHumorComponent implements OnInit {
   }
 
   humorModal(number) {
+    console.log('humorModal(' + number + ')');
     this.iconNumberModal = number;
-    console.log('inconNumberModal: ' + this.iconNumberModal);
   }
 
   findUserHumor() {
+    console.log('findUserHumor()');
     this.userHumorService.getUserHumor();
   }
 
   validateUserHumor() {
+    console.log('validateUserHumor()');
     this.userHumorService.postUserHumor(this.iconNumberModal);
   }
 }

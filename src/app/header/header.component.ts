@@ -13,9 +13,11 @@ export class HeaderComponent implements OnInit {
   protected isAuth = false;
 
   constructor(private authenticationService: AuthenticationService, private userHumorService: UserHumorService, private authgardService: AuthGardService, public router: Router) {
+    console.log('Constructor HeaderComponent');
   }
 
   ngOnInit() {
+    console.log('ngOnInit()');
     this.authgardService.isLoginObservable().subscribe((boolean) => {
       if (boolean !== undefined) {
         this.isAuth = boolean;
@@ -25,11 +27,13 @@ export class HeaderComponent implements OnInit {
   }
 
   giveToday() {
+    console.log('giveToday()');
     const date = new Date();
     return date;
   }
 
   onDisconnect() {
+    console.log('onDisconnect()');
     this.authenticationService.Disconnect();
     this.userHumorService.Disconnect();
     this.router.navigate(['/']);

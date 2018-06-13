@@ -10,7 +10,7 @@ import {observable} from 'rxjs';
 })
 export class TeamHumorComponent implements OnInit {
 
-  //les valeurs récupérées de teamHumor HTTP Request
+  // les valeurs récupérées de teamHumor HTTP Request
   protected valuesNumber = 0;
   protected teamHumorValue = 0;
 
@@ -22,14 +22,14 @@ export class TeamHumorComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log('ngOnInit()');
     // GET calcul humeur moyenne et nombre de membres
     this.teamHumorService.getTeamHumorHTTP();
     this.teamHumorService.getMembersNumber();
 
 
     // Souscrire à la moyenne des humeurs de l'équipe
-    this.teamHumorService.observableTeamHumor.subscribe((teamHumor) => {
+    this.teamHumorService.$observableTeamHumor.subscribe((teamHumor) => {
       this.valuesNumber = teamHumor.valuesNumber;
       if (teamHumor.teamHumorValue === 1) {
         this.teamHumorValue = 1;
@@ -41,13 +41,14 @@ export class TeamHumorComponent implements OnInit {
     });
 
     // Souscrire au nombre de membres enregistrés en base
-    this.teamHumorService.observableMembersNumber.subscribe((membersNumber) => {
+    this.teamHumorService.$observableMembersNumber.subscribe((membersNumber) => {
       this.membersNumber = membersNumber;
     });
   }
 
   // Cette méthode est utilisée par le bouton temporaire GetTeamHumor
   getTeamHumor() {
+    console.log('getteamHumor()');
     this.teamHumorService.getTeamHumorHTTP();
     this.teamHumorService.getMembersNumber();
   }

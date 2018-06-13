@@ -8,7 +8,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 })
 export class AuthGardService implements CanActivate {
 
-  private connected: boolean = false;
+  private connected = false;
 
   isLoginSubject = new BehaviorSubject<boolean>(this.connected);
 
@@ -21,16 +21,17 @@ export class AuthGardService implements CanActivate {
       if (authState && authState.isAuth) {
         this.connected = true;
         this.isLoginSubject.next(true);
-        console.log('AuthGard isLoginSubject = ' + this.isLoginSubject.value);
+        console.log('AuthGard isLoginSubject: ' + this.isLoginSubject.value);
       } else {
         this.connected = false;
         this.isLoginSubject.next(false);
-        console.log('AuthGard isLoginSubject = ' + this.isLoginSubject.value);
+        console.log('AuthGard isLoginSubject: ' + this.isLoginSubject.value);
       }
     });
   }
 
   canActivate(): boolean {
+    console.log('canActivate()');
     if (this.connected) {
       return true;
     } else {
@@ -42,10 +43,9 @@ export class AuthGardService implements CanActivate {
 
   // TODO vérifier si fonction utile pour HeaderComponent. Est-il possible de souscrire directement au BehaviourSubject?
   isLoginObservable(): Observable<boolean> {
+    console.log('isLoginObservable()');
     return this.isLoginSubject.asObservable();
   }
-
-
 
 
 }

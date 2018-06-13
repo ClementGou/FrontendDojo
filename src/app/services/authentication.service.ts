@@ -10,7 +10,7 @@ export class AuthenticationService {
 
   // On utilise un behaviorSubject pour permettre à tous les souscriveurs
   // d'obtenir la valeur courante (un BehaviorSubject a toujours une valeur par défaut)
-  observable = new BehaviorSubject<Auth>({isAuth: false, resp: -1});
+  $isAuthObservable = new BehaviorSubject<Auth>({isAuth: false, resp: -1});
 
   public authModel = new Auth();
 
@@ -21,28 +21,29 @@ export class AuthenticationService {
   //  On retourne le subject afin de laisser les autres composants
   // s'informer de l'état de l'authentification
   getAuthState() {
-    return this.observable;
+    console.log('getAuthState()');
+    return this.$isAuthObservable;
   }
 
   // Find if a user defined in forms exists in DB
   checkUserExistence(firstname, lastname, password) {
+    console.log('checkUserExistence()');
     const password64 = btoa(password);
-    console.log('password64: ' + password64);
 
     this.http.get<Auth>('member/login/firstname/' + firstname + '/lastname/' + lastname + '/password/' + password64,
       {observe: 'response'}).subscribe(response => {
         if (response.status === 200) {
-          this.observable.next({
+          this.$isAuthObservable.next({
             isAuth: true,
             resp: 200,
             id: response.body.id,
             firstname: response.body.firstname,
             lastname: response.body.lastname
           });
-          this.authModel.id = this.observable.value.id;
-          this.authModel.firstname = this.observable.value.firstname;
-          this.authModel.lastname = this.observable.value.lastname;
-          this.authModel.memberHumorLevel = this.observable.value.memberHumorLevel;
+          this.authModel.id = this.$isAuthObservable.value.id;
+          this.authModel.firstname = this.$isAuthObservable.value.firstname;
+          this.authModel.lastname = this.$isAuthObservable.value.lastname;
+          this.authModel.memberHumorLevel = this.$isAuthObservable.value.memberHumorLevel;
         } else {
           console.log(response.status + ' Utilisateur inconnu');
         }
@@ -50,17 +51,16 @@ export class AuthenticationService {
         console.log(response.body);
       },
       (error) => {
-        this.observable.next({isAuth: false, resp: 204});
-        //, msgError : 'compte desactit'
+        this.$isAuthObservable.next({isAuth: false, resp: 204});
+        // msgError : 'compte desactit'
         console.log('Erreur de connexion!: ' + error);
       }
 
       // TODO il faudra gérer les erreurs
     );
     // On retourne le subject afin de laisser les autres composants
-    return this.observable;
+    return this.$isAuthObservable;
   }
-
 
 // checkUserExistence(firstname, lastname, password) {
 //   // On mock / simule l'appel à un ws et on renvoie un succes apres 1 seconde
@@ -69,17 +69,18 @@ export class AuthenticationService {
 //     delay(1000)
 //   ).subscribe(
 //     (authData) => {
-//       this.observable.next(authData); // à conserver. et y souscrire
+//       this.$isAuthObservable.next(authData); // à conserver. et y souscrire
 //     }
 //     // TODO il faudra gérer les erreurs
 //   );
 //
 //   // On retourne le subject afin de laisser les autres composants
-//   return this.observable;
+//   return this.$isAuthObservable;
 // }
 
   Disconnect() {
-    this.observable.next({isAuth: false, resp: -1, id: null, firstname: null, lastname: null, password: null, memberHumorLevel: null});
+    console.log('Disconnect()');
+    this.$isAuthObservable.next({isAuth: false, resp: -1, id: null, firstname: null, lastname: null, password: null, memberHumorLevel: null});
   }
 
 

@@ -1,8 +1,8 @@
 import {Component, OnInit, SimpleChanges} from '@angular/core';
 import {AuthenticationService} from '../services/authentication.service';
-import {BehaviorSubject, Observable} from 'rxjs';
 import {AuthGardService} from '../services/auth-gard.service';
 import {Router} from '@angular/router';
+import {UserHumorService} from '../services/user-humor.service';
 
 @Component({
   selector: 'app-header',
@@ -12,13 +12,12 @@ import {Router} from '@angular/router';
 export class HeaderComponent implements OnInit {
   protected isAuth = false;
 
-  constructor(private authenticationService: AuthenticationService, private authgardService: AuthGardService, public router: Router) {
+  constructor(private authenticationService: AuthenticationService, private userHumorService: UserHumorService, private authgardService: AuthGardService, public router: Router) {
   }
 
   ngOnInit() {
     this.authgardService.isLoginObservable().subscribe((boolean) => {
       if (boolean !== undefined) {
-
         this.isAuth = boolean;
       }
       console.log('isAuth = ' + this.isAuth);
@@ -32,6 +31,7 @@ export class HeaderComponent implements OnInit {
 
   onDisconnect() {
     this.authenticationService.Disconnect();
+    this.userHumorService.Disconnect();
     this.router.navigate(['/']);
   }
 }

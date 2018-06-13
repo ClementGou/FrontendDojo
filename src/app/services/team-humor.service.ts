@@ -34,8 +34,8 @@ export class TeamHumorService {
   }
 
   getTeamHumorHTTP() {
-    // TODO enlever date URL pour huhmeur du jour
-    this.http.get<TeamHumorResponseModel>('teamHumor/2018-04-05', {observe: 'response'}).subscribe(data => {
+    // TODO enlever/ajouter date URL pour huhmeur du jour
+    this.http.get<TeamHumorResponseModel>('teamHumor', {observe: 'response'}).subscribe(data => {
       if (data.status === 200) {
         this.observableTeamHumor.next({
           day: data.body.day,

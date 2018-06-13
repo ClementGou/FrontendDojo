@@ -3,18 +3,35 @@
     <div id="humor-title" class="boxed bg-secondary">
       <h2 class="text-white">Humeur du jour de l'équipe</h2>
     </div>
+
     <div id="humor-box" class="boxed">
-      <span id="user-humor-icon">
-        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#memberHumorModal">
+      <!--Affichage des logos de choix pour l'utilisateur-->
+      <span id="user-humor-choice" *ngIf="!userHumorExists">
+        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#memberHumorModal"
+                (click)="humorModal(3)">
           <i class="fa fa-smile-o fa-5x"></i>
         </button>
-        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#memberHumorModal">
+        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#memberHumorModal"
+                (click)="humorModal(2)">
           <i class="fa fa-meh-o fa-5x"></i>
         </button>
-       <button type="button" class="btn btn-link" data-toggle="modal" data-target="#memberHumorModal">
+        <!--data-toogle: opens modal window; data-target: points id of the modal-->
+       <button type="button" class="btn btn-link" data-toggle="modal" data-target="#memberHumorModal"
+               (click)="humorModal(1)">
          <i class="fa fa-frown-o fa-5x"></i>
        </button>
       </span>
+      <!--Affichage du logo userHumor du jour si existe en base-->
+     <div *ngIf="userHumorExists">
+      <span id="user-humor-today">
+        <div [ngSwitch]="iconNumberUserHumor">
+          <i *ngSwitchCase="3" class="fa fa-smile-o fa-5x" style="color:green"></i>
+          <i *ngSwitchCase="2" class="fa fa-meh-o fa-5x" style="color:gold"></i>
+          <i *ngSwitchCase="1" class="fa fa-frown-o fa-5x" style="color:red"></i>
+                    <i *ngSwitchCase="null"> Probleme, iconeNumberUserHumor est null</i>
+        </div>
+      </span>
+     </div>
     </div>
   </div>
 </div>
@@ -27,16 +44,20 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="memberHumorModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="memberHumorModalLongTitle">Enregistrer l'humeur</h5>
       </div>
       <div class="modal-body">
         Voulez vous valider l'humeur du jour :
-        <i></i>
-
+        <div [ngSwitch]="iconNumberModal">
+          <i *ngSwitchCase="3" class="fa fa-smile-o fa-5x" style="color:green"></i>
+          <i *ngSwitchCase="2" class="fa fa-meh-o fa-5x" style="color:gold"></i>
+          <i *ngSwitchCase="1" class="fa fa-frown-o fa-5x" style="color:red"></i>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
-        <button type="button" class="btn btn-primary">Valider</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="humorModal(null)">Retour</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="validateUserHumor()">Valider
+        </button>
       </div>
     </div>
   </div>

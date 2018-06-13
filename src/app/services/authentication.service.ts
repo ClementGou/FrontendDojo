@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {HumorsComponent} from '../humors/humors.component';
 import {BehaviorSubject} from 'rxjs';
-import {of} from 'rxjs';
-import {delay} from 'rxjs/operators';
 import {Auth} from '../models/auth.model';
 
 @Injectable({
@@ -15,8 +12,9 @@ export class AuthenticationService {
   // d'obtenir la valeur courante (un BehaviorSubject a toujours une valeur par défaut)
   observable = new BehaviorSubject<Auth>({isAuth: false, resp: -1});
 
-  constructor(private http: HttpClient) {
+  public authModel = new Auth();
 
+  constructor(private http: HttpClient) {
     console.log('Constructor AuthenticationService');
   }
 
@@ -31,12 +29,20 @@ export class AuthenticationService {
     const password64 = btoa(password);
     console.log('password64: ' + password64);
 
-    this.http.get('member/login/firstname/' + firstname + '/lastname/' + lastname + '/password/' + password64,
+    this.http.get<Auth>('member/login/firstname/' + firstname + '/lastname/' + lastname + '/password/' + password64,
       {observe: 'response'}).subscribe(response => {
         if (response.status === 200) {
-          this.observable.next({isAuth: true, resp: 200});
-          console.log(response.status + ' Utilisateur existant');
-
+          this.observable.next({
+            isAuth: true,
+            resp: 200,
+            id: response.body.id,
+            firstname: response.body.firstname,
+            lastname: response.body.lastname
+          });
+          this.authModel.id = this.observable.value.id;
+          this.authModel.firstname = this.observable.value.firstname;
+          this.authModel.lastname = this.observable.value.lastname;
+          this.authModel.memberHumorLevel = this.observable.value.memberHumorLevel;
         } else {
           console.log(response.status + ' Utilisateur inconnu');
         }
@@ -51,7 +57,6 @@ export class AuthenticationService {
 
       // TODO il faudra gérer les erreurs
     );
-
     // On retourne le subject afin de laisser les autres composants
     return this.observable;
   }
@@ -74,7 +79,7 @@ export class AuthenticationService {
 // }
 
   Disconnect() {
-    this.observable.next({isAuth: false, resp: -1});
+    this.observable.next({isAuth: false, resp: -1, id: null, firstname: null, lastname: null, password: null, memberHumorLevel: null});
   }
 
 

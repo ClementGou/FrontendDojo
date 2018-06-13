@@ -14,21 +14,21 @@ export class TeamHumorComponent implements OnInit {
   protected valuesNumber = 0;
   protected teamHumorValue = 0;
 
-  //le nombre de membres enregistrés en base
+  // le nombre de membres enregistrés en base
   protected membersNumber = 0;
 
   constructor(private teamHumorService: TeamHumorService) {
-    console.log('Constuctor TeamHumorComponent');
+    console.log('Constructor TeamHumorComponent');
   }
 
   ngOnInit() {
 
-    //GET calcul humeur moyenne et nombre de membres
+    // GET calcul humeur moyenne et nombre de membres
     this.teamHumorService.getTeamHumorHTTP();
     this.teamHumorService.getMembersNumber();
 
 
-    //Souscrire à la moyenne des humeurs de l'équipe
+    // Souscrire à la moyenne des humeurs de l'équipe
     this.teamHumorService.observableTeamHumor.subscribe((teamHumor) => {
       this.valuesNumber = teamHumor.valuesNumber;
       if (teamHumor.teamHumorValue === 1) {
@@ -40,7 +40,7 @@ export class TeamHumorComponent implements OnInit {
       }
     });
 
-    //Souscrire au nombre de membres enregistrés en base
+    // Souscrire au nombre de membres enregistrés en base
     this.teamHumorService.observableMembersNumber.subscribe((membersNumber) => {
       this.membersNumber = membersNumber;
     });

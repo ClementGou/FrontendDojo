@@ -3,10 +3,10 @@
     <div id="humor-title" class="boxed bg-secondary">
       <h2 class="text-white">Humeur du jour de l'équipe</h2>
     </div>
-
     <div id="humor-box" class="boxed">
-      <!--Affichage des logos de choix pour l'utilisateur-->
+      <!--Affichage du choix d'humeurs pour l'utilisateur-->
       <span id="user-humor-choice" *ngIf="!userHumorExists">
+        <!--INFO MODAL: data-toogle: opens modal window; data-target: points id of the modal-->
         <button type="button" class="btn btn-link" data-toggle="modal" data-target="#memberHumorModal"
                 (click)="humorModal(3)">
           <i class="fa fa-smile-o fa-5x"></i>
@@ -15,39 +15,38 @@
                 (click)="humorModal(2)">
           <i class="fa fa-meh-o fa-5x"></i>
         </button>
-        <!--data-toogle: opens modal window; data-target: points id of the modal-->
        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#memberHumorModal"
                (click)="humorModal(1)">
          <i class="fa fa-frown-o fa-5x"></i>
        </button>
       </span>
-      <!--Affichage du logo userHumor du jour si existe en base-->
-     <div *ngIf="userHumorExists">
+      <!--Affichage de l'icone humeur utilisateur si l'humeur existe en base-->
+      <div *ngIf="userHumorExists">
       <span id="user-humor-today">
         <div [ngSwitch]="iconNumberUserHumor">
           <i *ngSwitchCase="3" class="fa fa-smile-o fa-5x" style="color:green"></i>
           <i *ngSwitchCase="2" class="fa fa-meh-o fa-5x" style="color:gold"></i>
           <i *ngSwitchCase="1" class="fa fa-frown-o fa-5x" style="color:red"></i>
-                    <i *ngSwitchCase="null"> Probleme, iconeNumberUserHumor est null</i>
+          <!--<i *ngSwitchCase="null"> Probleme, iconeNumberUserHumor est null</i>-->
         </div>
       </span>
-     </div>
+      </div>
     </div>
   </div>
 </div>
 
 
-<!-- Modal -->
+<!-- Affichage de la fenêtre Modal -->
 <div class="modal fade" id="memberHumorModal" tabindex="-1" role="dialog"
      aria-labelledby="memberHumorModalTitle"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="memberHumorModalLongTitle">Enregistrer l'humeur</h5>
+        <h5 class="modal-title" id="memberHumorModalLongTitle">Enregistrer votre humeur</h5>
       </div>
       <div class="modal-body">
-        Voulez vous valider l'humeur du jour :
+        Choisir l'humeur du jour suivante:
         <div [ngSwitch]="iconNumberModal">
           <i *ngSwitchCase="3" class="fa fa-smile-o fa-5x" style="color:green"></i>
           <i *ngSwitchCase="2" class="fa fa-meh-o fa-5x" style="color:gold"></i>

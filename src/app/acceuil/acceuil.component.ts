@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-acceuil',
   templateUrl: './acceuil.component.html',
   styleUrls: ['./acceuil.component.css']
 })
-export class AcceuilComponent implements OnInit {
+// Component de la page d'acceuil
+export class AcceuilComponent {
 
-  constructor() {    console.log('Constructor AcceuilComponent');}
-
-  ngOnInit() {
+  constructor() {
+    console.log('Constructor AcceuilComponent');
   }
-
 }

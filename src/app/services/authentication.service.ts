@@ -2,48 +2,48 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs';
 import {Auth} from '../models/auth.model';
+import {User} from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  // On utilise un behaviorSubject pour permettre à tous les souscriveurs
-  // d'obtenir la valeur courante (un BehaviorSubject a toujours une valeur par défaut)
-  $isAuthObservable = new BehaviorSubject<Auth>({isAuth: false, resp: -1});
-
-  public authModel = new Auth();
+  // Subject sur le model Auth qui contient les paramètres d'authentification et d'accès
+  private $isAuthObservable = new BehaviorSubject<Auth>({isAuth: false, resp: -1});
+  // Instanciation d'un model Utilisateur pour contenir les informations de connection et d'humeur
+  private userModel = new User();
 
   constructor(private http: HttpClient) {
     console.log('Constructor AuthenticationService');
   }
 
-  //  On retourne le subject afin de laisser les autres composants
-  // s'informer de l'état de l'authentification
+  // Retourner le subject afin de laisser les autres composants s'informer de l'état de l'authentification
   getAuthState() {
     console.log('getAuthState()');
     return this.$isAuthObservable;
   }
 
-  // Find if a user defined in forms exists in DB
-  checkUserExistence(firstname, lastname, password) {
-    console.log('checkUserExistence()');
+  // Vérifier si l'utilisateur existe en base lors de la connection
+  getUserExistence(firstname, lastname, password) {
+    console.log('getUserExistence()');
+    // Convertir le password du formulaire en Base64 avant la requête
     const password64 = btoa(password);
 
-    this.http.get<Auth>('member/login/firstname/' + firstname + '/lastname/' + lastname + '/password/' + password64,
+    // Requete HTTP GET qui regarde en base si l'utilisateur est enregistré
+    this.http.get<User>('member/login/firstname/' + firstname + '/lastname/' + lastname + '/password/' + password64,
       {observe: 'response'}).subscribe(response => {
+        // Si l'utilisateur existe
         if (response.status === 200) {
+          // On passe à l'observable les valeurs correspondant à l'état connecté
           this.$isAuthObservable.next({
             isAuth: true,
             resp: 200,
-            id: response.body.id,
-            firstname: response.body.firstname,
-            lastname: response.body.lastname
           });
-          this.authModel.id = this.$isAuthObservable.value.id;
-          this.authModel.firstname = this.$isAuthObservable.value.firstname;
-          this.authModel.lastname = this.$isAuthObservable.value.lastname;
-          this.authModel.memberHumorLevel = this.$isAuthObservable.value.memberHumorLevel;
+          // On alimente le model User avec les différents paramètres de la réponse
+          this.userModel.id = response.body.id;
+          this.userModel.firstname = response.body.firstname;
+          this.userModel.lastname = response.body.lastname;
         } else {
           console.log(response.status + ' Utilisateur inconnu');
         }
@@ -52,36 +52,24 @@ export class AuthenticationService {
       },
       (error) => {
         this.$isAuthObservable.next({isAuth: false, resp: 204});
-        // msgError : 'compte desactit'
         console.log('Erreur de connexion!: ' + error);
       }
-
-      // TODO il faudra gérer les erreurs
     );
-    // On retourne le subject afin de laisser les autres composants
     return this.$isAuthObservable;
   }
 
-// checkUserExistence(firstname, lastname, password) {
-//   // On mock / simule l'appel à un ws et on renvoie un succes apres 1 seconde
-//   // en utilisant le subject
-//   of({isAuth: true, resp: 200}).pipe( // TODO remettre la vrai requete http
-//     delay(1000)
-//   ).subscribe(
-//     (authData) => {
-//       this.$isAuthObservable.next(authData); // à conserver. et y souscrire
-//     }
-//     // TODO il faudra gérer les erreurs
-//   );
-//
-//   // On retourne le subject afin de laisser les autres composants
-//   return this.$isAuthObservable;
-// }
-
-  Disconnect() {
-    console.log('Disconnect()');
-    this.$isAuthObservable.next({isAuth: false, resp: -1, id: null, firstname: null, lastname: null, password: null, memberHumorLevel: null});
+  //Retourne le model User
+  getUserModel() {
+    console.log('getUserModel()');
+    return this.userModel;
   }
 
-
+  // Changer les valeurs des subjects pour correspondre à un état "non connecté". Fonction appelée par onDisconnect()
+  Disconnect() {
+    console.log('Disconnect()');
+    this.$isAuthObservable.next({
+      isAuth: false,
+      resp: -1,
+    });
+  }
 }

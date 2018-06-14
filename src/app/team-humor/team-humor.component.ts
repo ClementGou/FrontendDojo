@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TeamHumorService} from '../services/team-humor.service';
-import {observable} from 'rxjs';
+import {UserHumorService} from '../services/user-humor.service';
 
 @Component({
   selector: 'app-team-humor',
@@ -8,28 +8,28 @@ import {observable} from 'rxjs';
   styleUrls: ['../humors/humors.component.css']
 //  le css est celui du component parent, afin de factoriser le style de team-humor et user-humor
 })
+// Component gérant l'affichage de l'humeur de l'équipe et du compteur d'utilisateurs
 export class TeamHumorComponent implements OnInit {
 
-  // les valeurs récupérées de teamHumor HTTP Request
+  // Le nombre d'humeurs enregistrées en base
   protected valuesNumber = 0;
+  // La valeur de l'humeur moyenne
   protected teamHumorValue = 0;
-
-  // le nombre de membres enregistrés en base
+  // Le nombre de membres enregistrés en base
   protected membersNumber = 0;
 
-  constructor(private teamHumorService: TeamHumorService) {
+  constructor(private teamHumorService: TeamHumorService, private userHumorService: UserHumorService) {
     console.log('Constructor TeamHumorComponent');
   }
 
   ngOnInit() {
     console.log('ngOnInit()');
-    // GET calcul humeur moyenne et nombre de membres
-    this.teamHumorService.getTeamHumorHTTP();
+    // Demander au service de calculer l'humeur moyenne et le nombre de membres
+    this.teamHumorService.getTeamHumor();
     this.teamHumorService.getMembersNumber();
 
-
-    // Souscrire à la moyenne des humeurs de l'équipe
-    this.teamHumorService.$observableTeamHumor.subscribe((teamHumor) => {
+    // Souscrire à l'observable du service rendant la moyenne des humeurs de l'équipe
+    this.teamHumorService.get$observableTeamHumor().subscribe((teamHumor) => {
       this.valuesNumber = teamHumor.valuesNumber;
       if (teamHumor.teamHumorValue === 1) {
         this.teamHumorValue = 1;
@@ -41,15 +41,22 @@ export class TeamHumorComponent implements OnInit {
     });
 
     // Souscrire au nombre de membres enregistrés en base
-    this.teamHumorService.$observableMembersNumber.subscribe((membersNumber) => {
+    this.teamHumorService.get$observableMembersNumber().subscribe((membersNumber) => {
       this.membersNumber = membersNumber;
+    });
+
+    // Souscrire à l'ajout d'une humeur par l'utilisateur
+    this.userHumorService.get$userHumorExists().subscribe(boolean => {
+      if (boolean === true) {
+        this.updateTeamHumor();
+      }
     });
   }
 
-  // Cette méthode est utilisée par le bouton temporaire GetTeamHumor
-  getTeamHumor() {
+  // Update de l'humeur d'équipe ainsi que le nombre d'humeurs enregistrées, utilisé lorsque l'utilisateur ajoute une humeur
+  updateTeamHumor() {
     console.log('getteamHumor()');
-    this.teamHumorService.getTeamHumorHTTP();
+    this.teamHumorService.getTeamHumor();
     this.teamHumorService.getMembersNumber();
   }
 }

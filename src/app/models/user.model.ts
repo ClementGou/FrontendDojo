@@ -1,10 +1,8 @@
+// Model contenant les valeurs de l'utilisateur connecté
 export class User {
-  constructor(
-    public day?: Date,
-    public firstname?: string,
-    public lastname?: string,
-    public password?: string,
-    public userHumor?: number,
-  ) {
-  }
+  id?: number;
+  firstname?: string;
+  lastname?: string;
+  memberHumorLevel?: number;
+
 }

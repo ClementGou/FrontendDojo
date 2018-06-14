@@ -1,22 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from '../services/authentication.service';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-humors',
   templateUrl: './humors.component.html',
   styleUrls: ['./humors.component.css']
 })
-export class HumorsComponent implements OnInit {
+// Component de la page principal (Header, TeamHumor, UserHumor)
+export class HumorsComponent {
 
-  authStatus: boolean;
-
-  constructor(private authService: AuthenticationService) {
+  constructor() {
     console.log('Constructor HumorsComponent');
   }
-
-  ngOnInit() {
-    this.authStatus = false;
-
-  }
-
 }

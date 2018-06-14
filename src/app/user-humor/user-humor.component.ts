@@ -10,9 +10,12 @@ import {UserHumorService} from '../services/user-humor.service';
 
 export class UserHumorComponent implements OnInit {
 
+  // Numéro de l'humeur choisie par l'utilisateur en cliquant sur l'icone
   protected iconNumberModal: number;
-  protected iconNumberUserHumor: number;
+  // Booléen précisant si une humeur d'utilisateur existe en base
   protected userHumorExists: boolean;
+  // Numéro correspondant à l'humeur de l'utilisateur existante en base
+  protected iconNumberUserHumor: number;
 
   constructor(private userHumorService: UserHumorService) {
     console.log('Constructor UserHumorComponent');
@@ -20,27 +23,27 @@ export class UserHumorComponent implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit()');
-    this.findUserHumor();
-    this.userHumorService.$userHumorExists.subscribe(value => {
-      this.userHumorExists = value;
-      console.log('userHumorExists ' + value);
+    // Appel au service pour récupérer l'humeur utilisateur en base
+    this.userHumorService.getUserHumor();
+    // Souscrire au Subject du service, qui rend un boolean selon l'existence de l'humeur en base
+    this.userHumorService.get$userHumorExists().subscribe(boolean => {
+      this.userHumorExists = boolean;
+      console.log('userHumorExists ' + boolean);
     });
-    this.userHumorService.$userHumorLevel.subscribe(value => {
-      this.iconNumberUserHumor = value;
-      console.log('iconNumberUserHumor ' + value);
+    // Souscrire au Subject du service, qui rend la valeur de l'humeur utilisateur de la base
+    this.userHumorService.get$userHumorLevel().subscribe(number => {
+      this.iconNumberUserHumor = number;
+      console.log('iconNumberUserHumor ' + number);
     });
   }
 
+  // Afficher dans le modal l'icone cliquée par l'utilisateur
   humorModal(number) {
     console.log('humorModal(' + number + ')');
     this.iconNumberModal = number;
   }
 
-  findUserHumor() {
-    console.log('findUserHumor()');
-    this.userHumorService.getUserHumor();
-  }
-
+  // Appel au service pour poster l'humeur utilisateur en base
   validateUserHumor() {
     console.log('validateUserHumor()');
     this.userHumorService.postUserHumor(this.iconNumberModal);

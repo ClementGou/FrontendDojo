@@ -9,8 +9,14 @@ import {UserHumorService} from '../services/user-humor.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+
+// Component du header de l'appli
 export class HeaderComponent implements OnInit {
+
+  // Boolean permettant de gérer les affichages du header (Connection/Deconnection, informations utilisateur)
   protected isAuth = false;
+  // Générer la date du jour
+  protected date = new Date();
 
   constructor(private authenticationService: AuthenticationService, private userHumorService: UserHumorService, private authgardService: AuthGardService, public router: Router) {
     console.log('Constructor HeaderComponent');
@@ -18,7 +24,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit()');
-    this.authgardService.isLoginObservable().subscribe((boolean) => {
+    // Souscrire à l'observable d'authentification pour gérer l'affichage des boutons Connection/Déconnection
+    this.authgardService.getIsConnected().subscribe((boolean) => {
       if (boolean !== undefined) {
         this.isAuth = boolean;
       }
@@ -26,16 +33,13 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  giveToday() {
-    console.log('giveToday()');
-    const date = new Date();
-    return date;
-  }
-
+  // Fonction de déconnection activée par un bouton du header
   onDisconnect() {
     console.log('onDisconnect()');
+    // Effacer les paramètres de connection et les informations utilisateur
     this.authenticationService.Disconnect();
     this.userHumorService.Disconnect();
+    // Redirection sur la page d'acceuil
     this.router.navigate(['/']);
   }
 }

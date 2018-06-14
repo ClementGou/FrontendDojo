@@ -6,46 +6,43 @@ import {BehaviorSubject, Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+// Ce service va permettre de contrôler l'affichage de certaines page en fonction du statut Connecté/Déconnecté, grâce à l'implémentation de CanActivate
 export class AuthGardService implements CanActivate {
 
-  private connected = false;
-
-  isLoginSubject = new BehaviorSubject<boolean>(this.connected);
-
+  // Subject qui suivra le statut de connection de l'utilisateur
+  private $isConnected = new BehaviorSubject<boolean>(false);
 
   constructor(private authenticationService: AuthenticationService, public router: Router) {
     console.log('Constructor AuthGardService');
-
-    // On souscrit au service et on update l'état interne du guard en fonction
+    // On souscrit au service d'authentification et on update l'état interne du Subject $isConnected en fonction
     this.authenticationService.getAuthState().subscribe(authState => {
       if (authState && authState.isAuth) {
-        this.connected = true;
-        this.isLoginSubject.next(true);
-        console.log('AuthGard isLoginSubject: ' + this.isLoginSubject.value);
+        this.$isConnected.next(true);
+        console.log('AuthGard $isConnected: ' + this.$isConnected.value);
       } else {
-        this.connected = false;
-        this.isLoginSubject.next(false);
-        console.log('AuthGard isLoginSubject: ' + this.isLoginSubject.value);
+        this.$isConnected.next(false);
+        console.log('AuthGard $isConnected: ' + this.$isConnected.value);
       }
     });
   }
 
+  // Fonction dont l'état varie en fonction de l'état Connecté/Déconnecté. Permet de controler quelles pages sont accessibles selon son état.
   canActivate(): boolean {
     console.log('canActivate()');
-    if (this.connected) {
+    // Si l'observable est true, alors canActivate() renvoie true et l'affichage de la page des humeurs est possible
+    if (this.$isConnected.value === true) {
       return true;
     } else {
+      // Sinon retour à la page de connexion
       this.router.navigate(['connection']);
+      // Et les URL sous la contraintes de canActivate ne sont pas accessibles (cf appRoutes)
       return false;
     }
   }
 
-
-  // TODO vérifier si fonction utile pour HeaderComponent. Est-il possible de souscrire directement au BehaviourSubject?
-  isLoginObservable(): Observable<boolean> {
-    console.log('isLoginObservable()');
-    return this.isLoginSubject.asObservable();
+  // Retourne l'observable $isConnected, pour le HeaderComponent en particulier
+  getIsConnected() {
+    console.log('getIsConnected()');
+    return this.$isConnected;
   }
-
-
 }

@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  // base URL pour toutes les requêtes HTTP (cf "application.interceptor.ts")
   apiUrl: 'http://localhost:8080/BackendDojo/api/v1'
 };
 

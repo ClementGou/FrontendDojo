@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouterModule, Routes, CanActivate} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
@@ -16,11 +16,8 @@ import {AuthGardService} from './services/auth-gard.service';
 import {AuthenticationService} from './services/authentication.service';
 import {TeamHumorService} from './services/team-humor.service';
 import {UserHumorService} from './services/user-humor.service';
-import {API_URL, ApplicationInterceptor} from './application.interceptor';
+import {API_URL, ApplicationInterceptor} from './interceptor/application.interceptor';
 import {environment} from '../environments/environment';
-import {SafeHTMLPipe} from './pipes/safe-html.pipe';
-import {Auth} from './models/auth.model';
-
 
 const appRoutes: Routes = [
   {path: '', component: AcceuilComponent},
@@ -38,8 +35,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     HumorsComponent,
     AcceuilComponent,
-    SafeHTMLPipe,
   ],
+
   imports: [
     BrowserModule,
     FormsModule,
@@ -54,7 +51,6 @@ const appRoutes: Routes = [
     AuthenticationService,
     TeamHumorService,
     UserHumorService,
-
     AppComponent,
     {provide: API_URL, useValue: environment.apiUrl},
     {provide: HTTP_INTERCEPTORS, useClass: ApplicationInterceptor, multi: true, deps: [API_URL]},
